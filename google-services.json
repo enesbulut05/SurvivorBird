@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "740996615550",
+    "project_id": "survivor-bird-c6635",
+    "storage_bucket": "survivor-bird-c6635.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740996615550:android:7a3c0dabd8a62257e6f72f",
+        "android_client_info": {
+          "package_name": "com.enesbulut.survivorbird"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEHXN88eyBLQHnPZbNIDSxaQI1ectsHaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
