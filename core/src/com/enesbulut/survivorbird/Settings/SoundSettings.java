@@ -1,4 +1,4 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Settings;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 

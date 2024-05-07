@@ -1,4 +1,4 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -17,8 +17,8 @@ public class ScoreSettings {
         return preferences.getInteger(BEST_SCORE_KEY, 0); // Varsayılan olarak 0 ayarla
     }
 
-    public void setBestScore(int bestScore) {
+    public void saveBestScore(int bestScore) {
         preferences.putInteger(BEST_SCORE_KEY, bestScore);
-        preferences.flush(); // Değişiklikleri kaydet
+        preferences.flush();
     }
 }
