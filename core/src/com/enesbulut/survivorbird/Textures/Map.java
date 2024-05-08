@@ -1,4 +1,4 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Textures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

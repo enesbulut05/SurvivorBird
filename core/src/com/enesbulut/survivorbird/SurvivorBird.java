@@ -5,41 +5,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.enesbulut.survivorbird.Generators.TextGenerator;
 import com.enesbulut.survivorbird.Settings.ScoreSettings;
+import com.enesbulut.survivorbird.Textures.Bird;
+import com.enesbulut.survivorbird.Textures.Buttons;
+import com.enesbulut.survivorbird.Textures.Enemies;
+import com.enesbulut.survivorbird.Textures.Map;
 
 public class SurvivorBird extends ApplicationAdapter {
 
 	SpriteBatch batch;
 	Texture survivorBird;
-	float velocity = 0;
-	float gravity;
-	//int score = 0;
-	//int bestScore;
 	int scoredEnemy=0;
-	TextGenerator scoreText;
-	TextGenerator yourScoreText;
-	TextGenerator bestScoreText;
-	TextGenerator gameOverText;
-	TextGenerator newBestScoreText;
+	TextGenerator scoreText,yourScoreText, bestScoreText,gameOverText,newBestScoreText;
 	static int numberOfEnemies = 4;
 	Stage stage;
 	ScoreSettings scoreSettings;
-	Music backgroundMusic;
-	Music playMusic;
-	Music deadSound;
+	Music backgroundMusic,playMusic,deadSound;
 	Bird bird;
 	Enemies enemies;
 	Map map;
 	Buttons buttons;
-	TextGenerator buttonText;
-
-
 
 	@Override
 	public void create () {
@@ -51,7 +41,6 @@ public class SurvivorBird extends ApplicationAdapter {
 		if(buttons.isSoundEnabled()){
 		backgroundMusic.play();
 		}
-
 	}
 
 	@Override
@@ -60,17 +49,18 @@ public class SurvivorBird extends ApplicationAdapter {
 
 		map.drawMap(batch);
 
-		if (Info.getGameState() == 1){
+		if (Info.getScreenStatus() == ScreenStatus.PLAY){
 			gameScreen();
-		} else if (Info.getGameState() == 0) {
+		} else if (Info.getScreenStatus() == ScreenStatus.MAIN) {
 			mainScreen();
-		} else if (Info.getGameState() == 2) {
+		} else if (Info.getScreenStatus() == ScreenStatus.OVER) {
 			gameOverScreen();
 		}
 
 		batch.end();
 		bird.resetCircle();
 
+		//Crash control
 		for (int i = 0; i< numberOfEnemies; i++){
 			if(Intersector.overlaps(bird.getCircle(),enemies.getEnemyWave(i).getCircleByIndex(0)) ||
 					Intersector.overlaps(bird.getCircle(),enemies.getEnemyWave(i).getCircleByIndex(1)) ||
@@ -78,7 +68,7 @@ public class SurvivorBird extends ApplicationAdapter {
 				if(buttons.isSoundEnabled()){
 				deadSound.play();
 				}
-				Info.setGameState(2);
+				Info.setScreenStatus(ScreenStatus.OVER);
 			}
 		}
 	}
@@ -141,30 +131,15 @@ public class SurvivorBird extends ApplicationAdapter {
 		}
 
 		enemies.moveEnemies(batch);
-
-		if(buttons.isNewModEnabled() && Gdx.input.isTouched()){
-			velocity -= 0.00092592592*Gdx.graphics.getHeight();
-			if (velocity < - 0.01666666666*Gdx.graphics.getHeight()){
-				velocity = (float) (-0.01666666666*Gdx.graphics.getHeight());
-			}
-		}
-
-		if (!buttons.isNewModEnabled() &&Gdx.input.justTouched()){
-
-			velocity -= 0.00925925925*Gdx.graphics.getHeight();
-			if (velocity < - 0.01666666666*Gdx.graphics.getHeight()){
-				velocity = (float) (-0.01666666666*Gdx.graphics.getHeight());
-			}
-		}
+		bird.fly(buttons);
 
 		if(bird.getBirdY() > 0 && bird.getBirdY() < Gdx.graphics.getHeight()){
-			velocity = velocity + gravity;
-			bird.setBirdY(bird.getBirdY()-velocity);
+			bird.fall();
 		} else {
-			if(buttons.isSoundEnabled()){
+			if(buttons.isSoundEnabled()) {
 				deadSound.play();
 			}
-			Info.setGameState(2);
+			Info.setScreenStatus(ScreenStatus.OVER);
 		}
 
 	}
@@ -192,11 +167,7 @@ public class SurvivorBird extends ApplicationAdapter {
 		stage.draw();
 		bird.reserBirdY();
 
-		for (int i = 0; i < numberOfEnemies; i++) {
-			//enemies = new Enemies();
-			enemies.resetEnemies();
-		}
-		velocity = 0;
+		enemies.resetEnemies();
 		scoredEnemy = 0;
 	}
 
@@ -208,7 +179,7 @@ public class SurvivorBird extends ApplicationAdapter {
 
 		scoreSettings = new ScoreSettings();
 		Info.setBestScore(scoreSettings.getBestScore());
-		Info.setGameState(0);
+		Info.setScreenStatus(ScreenStatus.MAIN);
 
 		scoreText = new TextGenerator(Color.WHITE,80);
 		bestScoreText = new TextGenerator(Color.BLACK,100);
@@ -217,7 +188,6 @@ public class SurvivorBird extends ApplicationAdapter {
 		newBestScoreText = new TextGenerator(Color.BLACK,150);
 
 		survivorBird = new Texture("survivorbird.png");
-		gravity =0.00046296296f*Gdx.graphics.getHeight();
 
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainMusic.mp3"));
 		playMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/playMusic.mp3"));

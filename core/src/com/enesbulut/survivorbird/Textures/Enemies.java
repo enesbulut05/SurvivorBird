@@ -1,4 +1,4 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Textures;
 
 import static com.enesbulut.survivorbird.SurvivorBird.numberOfEnemies;
 

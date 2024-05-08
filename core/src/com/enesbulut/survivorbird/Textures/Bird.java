@@ -1,4 +1,4 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Textures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +18,8 @@ public class Bird {
     private float birdY;
     private float birdWidth;
     private float birdHeight;
+    private float velocity;
+    private float gravity;
 
     public Bird(String file) {
         this.texture = new Texture(file+".png");
@@ -26,6 +28,27 @@ public class Bird {
         this.birdY = Gdx.graphics.getHeight() / 2;
         this.birdWidth = Gdx.graphics.getWidth()/18;
         this.birdHeight = Gdx.graphics.getHeight()/10;
+        this.velocity = 0;
+        this.gravity = 0.00046296296f*Gdx.graphics.getHeight();
+    }
+    public void fly(Buttons buttons){
+        if(buttons.isNewModEnabled() && Gdx.input.isTouched()){
+            velocity -= 0.00092592592*Gdx.graphics.getHeight();
+            if (velocity < - 0.01666666666*Gdx.graphics.getHeight()){
+                velocity = (-0.01666666666f*Gdx.graphics.getHeight());
+            }
+        }
+
+        if (!buttons.isNewModEnabled() &&Gdx.input.justTouched()){
+            velocity -= 0.00925925925*Gdx.graphics.getHeight();
+            if (velocity < - 0.01666666666*Gdx.graphics.getHeight()){
+                velocity = (float) (-0.01666666666*Gdx.graphics.getHeight());
+            }
+        }
+    }
+    public void fall(){
+        velocity = velocity + gravity;
+        setBirdY(getBirdY()-velocity);
     }
 
     public Circle getCircle() {

@@ -1,8 +1,9 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Textures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
+import com.enesbulut.survivorbird.Info;
 
 import java.util.Random;
 

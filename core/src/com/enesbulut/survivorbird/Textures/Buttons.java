@@ -1,9 +1,12 @@
-package com.enesbulut.survivorbird;
+package com.enesbulut.survivorbird.Textures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.enesbulut.survivorbird.Generators.GenerateButton;
+import com.enesbulut.survivorbird.Info;
+import com.enesbulut.survivorbird.ScreenStatus;
 import com.enesbulut.survivorbird.Settings.GameModSettings;
 import com.enesbulut.survivorbird.Settings.SoundSettings;
 
@@ -33,8 +36,8 @@ public class Buttons {
     }
 
     public void setVisibilities(){
-        switch (Info.getGameState()){
-            case 0:
+        switch (Info.getScreenStatus()){
+            case MAIN:
                 playButton.getGeneratedButton().setVisible(true);
                 soundButton.getGeneratedButton().setVisible(true);
                 modeButton.getGeneratedButton().setVisible(true);
@@ -42,7 +45,7 @@ public class Buttons {
                 againButton.getGeneratedButton().setVisible(false);
                 homeButton.getGeneratedButton().setVisible(false);
                 break;
-            case 1:
+            case PLAY:
                 playButton.getGeneratedButton().setVisible(false);
                 soundButton.getGeneratedButton().setVisible(false);
                 modeButton.getGeneratedButton().setVisible(false);
@@ -50,7 +53,7 @@ public class Buttons {
                 againButton.getGeneratedButton().setVisible(false);
                 homeButton.getGeneratedButton().setVisible(false);
                 break;
-            case 2:
+            case OVER:
                 againButton.getGeneratedButton().setVisible(true);
                 homeButton.getGeneratedButton().setVisible(true);
                 playButton.getGeneratedButton().setVisible(false);
@@ -74,7 +77,7 @@ public class Buttons {
         playButton.getGeneratedButton().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Info.setGameState(1);
+                Info.setScreenStatus(ScreenStatus.PLAY);
                 Info.setScore(0);
 
             }
@@ -107,7 +110,7 @@ public class Buttons {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Again butonuna tıklanıldığında yapılacak işlemler
-                Info.setGameState(1);
+                Info.setScreenStatus(ScreenStatus.PLAY);
                 Info.setScore(0);
             }
         });
@@ -200,7 +203,7 @@ public class Buttons {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Home butonuna tıklanıldığında yapılacak işlemler
-                Info.setGameState(0);
+                Info.setScreenStatus(ScreenStatus.MAIN);
             }
         });
         stage.addActor(homeButton.getGeneratedButton());

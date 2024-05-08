@@ -3,7 +3,7 @@ package com.enesbulut.survivorbird;
 public class Info {
 
 
-    static private int gameState;
+    static private ScreenStatus screenStatus;
     static private int score;
     static private int bestScore;
 
@@ -23,11 +23,11 @@ public class Info {
         Info.bestScore = bestScore;
     }
 
-    public static int getGameState() {
-        return gameState;
+    public static ScreenStatus getScreenStatus() {
+        return screenStatus;
     }
 
-    public static void setGameState(int gameState) {
-        Info.gameState = gameState;
+    public static void setScreenStatus(ScreenStatus screenStatus) {
+        Info.screenStatus = screenStatus;
     }
 }
