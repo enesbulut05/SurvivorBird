@@ -22,7 +22,7 @@ public class SurvivorBird extends ApplicationAdapter {
 	Texture survivorBird;
 	int scoredEnemy=0;
 	TextGenerator scoreText,yourScoreText, bestScoreText,gameOverText,newBestScoreText;
-	static int numberOfEnemies = 4;
+	public static int numberOfEnemies = 4;
 	Stage stage;
 	ScoreSettings scoreSettings;
 	Music backgroundMusic,playMusic,deadSound;
